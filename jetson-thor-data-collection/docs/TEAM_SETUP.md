@@ -14,10 +14,8 @@ An organization-owned Hugging Face dataset is important for collaboration. A pri
 Suggested dataset ID:
 
 ```text
-brethrobotics/prompt-to-platter-robot-data
+YOUR_HF_ORG/prompt-to-platter-robot-data
 ```
-
-The private dataset has been initialized at <https://huggingface.co/datasets/brethrobotics/prompt-to-platter-robot-data>. Engineers must belong to the `brethrobotics` Hugging Face organization to access it.
 
 ## One-time administrator checklist
 

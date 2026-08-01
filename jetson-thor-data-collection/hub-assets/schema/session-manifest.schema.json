@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://huggingface.co/datasets/prompt-to-platter/session-manifest.schema.json",
+  "title": "Prompt to Platter collection session",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "status",
+    "created_at",
+    "task",
+    "robot_id",
+    "dataset_format",
+    "cameras",
+    "hardware"
+  ],
+  "properties": {
+    "schema_version": { "const": "prompt-to-platter-session/v1" },
+    "session_id": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["collecting", "finalized", "uploaded"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "finalized_at": { "type": "string", "format": "date-time" },
+    "task": { "type": "string", "minLength": 1 },
+    "robot_id": { "type": "string", "minLength": 1 },
+    "dataset_format": { "type": "string", "minLength": 1 },
+    "cameras": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string" },
+    "hardware": {
+      "type": "object",
+      "required": ["device_model", "machine", "system_release", "python"],
+      "properties": {
+        "device_model": { "type": "string" },
+        "machine": { "type": "string" },
+        "system_release": { "type": "string" },
+        "python": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "file_count": { "type": "integer", "minimum": 0 },
+    "total_bytes": { "type": "integer", "minimum": 0 },
+    "inventory": { "type": "string" },
+    "upload": {
+      "type": "object",
+      "required": ["repo_id", "path_in_repo", "commit_url", "uploaded_at"],
+      "properties": {
+        "repo_id": { "type": "string" },
+        "path_in_repo": { "type": "string" },
+        "commit_url": { "type": "string", "format": "uri" },
+        "uploaded_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

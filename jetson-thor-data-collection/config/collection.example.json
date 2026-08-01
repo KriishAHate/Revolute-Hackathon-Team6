@@ -1,0 +1,24 @@
+{
+  "schema_version": "prompt-to-platter-collection-config/v1",
+  "dataset_format": "lerobot-v3",
+  "control_frequency_hz": 30,
+  "robot_id": "platter-robot-01",
+  "cameras": [
+    {
+      "name": "overhead-rgb",
+      "modality": "rgb",
+      "resolution": [1920, 1080],
+      "fps": 30
+    },
+    {
+      "name": "wrist-rgbd",
+      "modality": "rgbd",
+      "resolution": [1280, 720],
+      "fps": 30
+    }
+  ],
+  "required_sidecars": [
+    "metadata/board-plan.json",
+    "metadata/calibration.json"
+  ]
+}

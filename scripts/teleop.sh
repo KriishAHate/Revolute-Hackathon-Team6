@@ -1,0 +1,8 @@
+lerobot-teleoperate \
+    --robot.type=seeed_b601_rs_follower \
+    --robot.port="$PCAN_IF" \
+    --robot.id=follower1 \
+    --robot.can_adapter=socketcan \
+    --teleop.type=rebot_arm_102_leader \
+    --teleop.port=/dev/ttyUSB0 \
+    --teleop.id=rebot_arm_102_leader

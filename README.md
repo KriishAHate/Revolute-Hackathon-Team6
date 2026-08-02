@@ -57,7 +57,7 @@ Photos and demo footage from the build live on our shared Drive folder / demo vi
 - Policy: **ACT (Action Chunking Transformer)**, via `lerobot-train`
 - Orange: trained for **50,000 steps** (`act_orange-50-run2`)
 - Lychee: trained for **50,000 steps** (`act_lychee`)
-- An earlier template/test run (`orange-fixed_4`) was trained for only **20,000 steps** — a shorter, earlier pass before scaling up
+- An earlier template/test run (`orange-fixed_4`) was trained for only **5,000 steps** — a shorter, earlier pass before scaling up
 - All runs: `policy.device=cuda`, W&B logging disabled, no push to hub
 
 ### 🚀 Edge Deployment / Inference

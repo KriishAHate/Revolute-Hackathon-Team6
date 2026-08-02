@@ -36,7 +36,9 @@ The gripper was the recurring troublemaker throughout — the part most likely t
 
 ## 📸 Media
 
-Photos and demo footage from the build live on our shared Drive folder / demo video rather than in this repo.
+Event photos and general demo footage live on our shared Drive folder / demo video, rather than in this repo. The MuJoCo real-vs-sim comparison video and random rollout gif, however, are committed directly under `media/` since they're generated technical artifacts of the sim work, not event photos:
+- `media/episode0-real-vs-sim.mp4`
+- `media/random-rollout.gif`
 
 ## 🛠️ System Architecture & Story
 
@@ -57,8 +59,23 @@ Photos and demo footage from the build live on our shared Drive folder / demo vi
 - Policy: **ACT (Action Chunking Transformer)**, via `lerobot-train`
 - Orange: trained for **50,000 steps** (`act_orange-50-run2`)
 - Lychee: trained for **50,000 steps** (`act_lychee`)
-- An earlier template/test run (`orange-fixed_4`) was trained for only **5,000 steps** — a shorter, earlier pass before scaling up
+- An earlier template/test run (`orange-fixed_4`) was trained for only **20,000 steps** — a shorter, earlier pass before scaling up
 - All runs: `policy.device=cuda`, W&B logging disabled, no push to hub
+
+### 🧪 Simulation (MuJoCo)
+
+Alongside the real hardware pipeline, the arm was modeled in MuJoCo (converted from a URDF) so we could test things without waiting on the physical setup:
+
+- **`sim/rs-arm.urdf`** → **`sim/rs_arm.xml`** / **`sim/scene.xml`**: MuJoCo model of the follower arm, including a mocap-driven target sphere and a front-matching camera for visual comparison against the real footage
+- **`sim/mujoco_gym_arm.ipynb`**: wraps the model in a custom Gymnasium environment, `RSArmReach-v0` — torque control over the 6 arm joints + 2 gripper fingers, reward shaped by distance to a randomly sampled target, with a small bonus on reaching it
+- **Real-vs-sim replay**: recorded teleop episodes (from the `orange-fixed_4` dataset) are replayed kinematically in the sim model and rendered side-by-side against the real camera footage — see `media/episode0-real-vs-sim.mp4`
+- **Random rollout**: `media/random-rollout.gif` shows the untrained/random policy flailing around in sim — a nice visual baseline for "the arm has no idea what it's doing yet"
+- **`notebooks/open_parquet.ipynb`**: a small utility notebook for loading and inspecting the recorded LeRobot dataset (parquet files) directly, outside of the training pipeline
+
+**Where this was headed next** (per the notebook's own "potential next steps," not yet implemented):
+- Estimating each fruit's size/location automatically and feeding that into a config rather than hardcoding it
+- Training a policy in sim to move an object between two locations, using that as a cheaper/faster complement to real-world training
+- Running the full pick-and-place sequence across all three fruits back-to-back, more like a real motion-planning task
 
 ### 🚀 Edge Deployment / Inference
 - Evaluation run via `lerobot-record`, loading the trained checkpoint (`checkpoints/050000/pretrained_model`) directly on hardware — no separate "inference-only" script, eval just re-runs the record pipeline with a policy attached instead of a human

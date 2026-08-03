@@ -115,6 +115,7 @@ What's still cursed:
 
 - Jinhee
 - Phil
+- Kriish
 
 ---
 
